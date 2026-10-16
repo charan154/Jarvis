@@ -1,6 +1,5 @@
 package com.cherry.jarvis;
 
-import android.accessibilityservice.AccessibilityService;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -141,7 +140,7 @@ public class WakeWordService extends Service implements TextToSpeech.OnInitListe
         } else if (c.contains("who are you") || c.contains("what are you")) {
             speak("I am Jarvis, your voice assistant. I can open apps, help with basic phone actions, tell you the time and date, adjust volume, and hand questions to web search. Full AI answers need an AI model or service.");
         } else if (c.contains("what can you do") || c.contains("help me") || c.equals("help")) {
-            speak("Try opening WhatsApp, Maps, Camera, or Settings; ask me to search the web; change volume; open Wi-Fi settings; tell the time or date; check battery; or say go home, go back, or show notifications. Some navigation commands need Accessibility enabled.");
+            speak("Try opening WhatsApp, Maps, Camera, or Settings; ask me to search the web; change volume; open Wi-Fi settings; tell the time or date; check battery; or ask me to search the web.");
         } else if (c.contains("tell me a joke") || c.equals("joke")) {
             speak("Why do programmers prefer dark mode? Because light attracts bugs.");
         } else if (c.contains("increase volume") || c.contains("volume up") || c.contains("turn volume up")) {
@@ -156,16 +155,6 @@ public class WakeWordService extends Service implements TextToSpeech.OnInitListe
             AudioManager audio = (AudioManager) getSystemService(AUDIO_SERVICE);
             if (audio != null) audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_UNMUTE, 0);
             speak("Media volume restored.");
-        } else if (c.contains("go home") || c.equals("home screen") || c.equals("home")) {
-            globalAction(AccessibilityService.GLOBAL_ACTION_HOME, "Going home.");
-        } else if (c.contains("go back") || c.equals("back")) {
-            globalAction(AccessibilityService.GLOBAL_ACTION_BACK, "Going back.");
-        } else if (c.contains("recent apps") || c.contains("show recents")) {
-            globalAction(AccessibilityService.GLOBAL_ACTION_RECENTS, "Showing recent apps.");
-        } else if (c.contains("show notifications") || c.equals("notifications")) {
-            globalAction(AccessibilityService.GLOBAL_ACTION_NOTIFICATIONS, "Opening notifications.");
-        } else if (c.contains("quick settings")) {
-            globalAction(AccessibilityService.GLOBAL_ACTION_QUICK_SETTINGS, "Opening Quick Settings.");
         } else if (c.contains("open wi-fi") || c.contains("open wifi") || c.contains("wifi settings") || c.contains("internet settings")) {
             openWifiSettings();
         } else if (c.contains("open bluetooth") || c.contains("bluetooth settings")) {
@@ -221,15 +210,6 @@ public class WakeWordService extends Service implements TextToSpeech.OnInitListe
         AudioManager audio = (AudioManager) getSystemService(AUDIO_SERVICE);
         if (audio != null) audio.adjustStreamVolume(AudioManager.STREAM_MUSIC, direction, 0);
         speak(response);
-    }
-
-    private void globalAction(int action, String response) {
-        speak(response);
-        handler.postDelayed(() -> {
-            if (!JarvisAccessibilityService.doGlobalAction(action)) {
-                speak("Please enable Jarvis phone controls in Accessibility settings first.");
-            }
-        }, 650);
     }
 
     private void openWifiSettings() {
