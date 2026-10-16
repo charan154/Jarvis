@@ -89,16 +89,7 @@ public class WakeWordService extends Service implements TextToSpeech.OnInitListe
                         if (matches != null && !matches.isEmpty()) handleRecognized(matches.get(0));
                         else scheduleListen(400);
                     }
-                    @Override public void onPartialResults(android.os.Bundle partialResults) {
-                        ArrayList<String> matches = partialResults.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-                        if (matches != null && !matches.isEmpty()) {
-                            String phrase = matches.get(0).toLowerCase(Locale.ROOT);
-                            if (!awaitingCommand && (phrase.contains("hey jarvis") || phrase.contains("hey, jarvis"))) {
-                                try { recognizer.stopListening(); } catch (Exception ignored) {}
-                                handleRecognized(matches.get(0));
-                            }
-                        }
-                    }
+                    @Override public void onPartialResults(android.os.Bundle partialResults) { }
                     @Override public void onEvent(int eventType, android.os.Bundle params) {}
                 });
             }
