@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="jarvis_accessibility_description">Allows Jarvis to perform requested navigation actions such as Home, Back, Recents, notifications, and Quick Settings.</string>
+</resources>
