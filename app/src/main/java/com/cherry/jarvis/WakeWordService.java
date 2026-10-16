@@ -242,9 +242,7 @@ public class WakeWordService extends Service implements TextToSpeech.OnInitListe
 
     private void openBluetoothSettings() {
         speak("Opening Bluetooth settings.");
-        Intent intent = Build.VERSION.SDK_INT >= 29
-                ? new Intent(Settings.Panel.ACTION_BLUETOOTH)
-                : new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
+        Intent intent = new Intent(Settings.ACTION_BLUETOOTH_SETTINGS);
         handler.postDelayed(() -> launch(intent), 700);
     }
 
